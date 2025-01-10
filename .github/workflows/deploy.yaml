@@ -22,3 +22,19 @@ jobs:
       - run: docker push yabdelhady/multi-nginx-up
       - run: docker push yabdelhady/multi-server-up
       - run: docker push yabdelhady/multi-worker-up
+
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: multi-docker-1
+          environment_name: Multi-docker-1-env
+          existing_bucket_name: elasticbeanstalk-eu-north-1-221082198738 
+          region: eu-north-1
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip
+
