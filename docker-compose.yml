@@ -1,11 +1,11 @@
 version: '3'
 services:
   client:
-    image: 'yabdelhady/multi-client'
+    image: 'yabdelhady/multi-client-up'
     mem_limit: 128m
     hostname: client
   server:
-    image: 'yabdelhady/multi-server'
+    image: 'yabdelhady/multi-server-up'
     mem_limit: 128m
     hostname: api
     environment:
@@ -17,14 +17,14 @@ services:
       - PGPASSWORD=$PGPASSWORD
       - PGPORT=$PGPORT
   worker:
-    image: 'yabdelhady/multi-worker'
+    image: 'yabdelhady/multi-worker-up'
     mem_limit: 128m
     hostname: worker
     environment:
       - REDIS_HOST=$REDIS_HOST
       - REDIS_PORT=$REDIS_PORT
   nginx:
-    image: 'yabdelhady/multi-nginx'
+    image: 'yabdelhady/multi-nginx-up'
     mem_limit: 128m
     hostname: nginx
     ports:
